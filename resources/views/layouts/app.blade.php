@@ -32,7 +32,7 @@
                 <a href="#benefits" class="px-3 py-2 rounded-lg hover:bg-emerald-500/10 hover:text-emerald-700 transition">Benefit</a>
                 <a href="#process" class="px-3 py-2 rounded-lg hover:bg-emerald-500/10 hover:text-emerald-700 transition">Proses</a>
 
-                @auth
+                 @auth
           @if(auth()->user()->is_admin)
             <a href="{{ route('admin.dashboard') }}" class="px-3 py-2 rounded-lg hover:bg-emerald-500/10 hover:text-emerald-700 transition">Admin</a>
           @endif
@@ -65,7 +65,7 @@
                 <a href="#benefits" class="px-3 py-2 rounded-lg hover:bg-emerald-500/10">Benefit</a>
                 <a href="#process" class="px-3 py-2 rounded-lg hover:bg-emerald-500/10">Proses</a>
 
-                <!-- @auth
+                @auth
           @if(auth()->user()->is_admin)
             <a href="{{ route('admin.dashboard') }}" class="px-3 py-2 rounded-lg hover:bg-emerald-500/10">Admin</a>
           @endif
@@ -75,7 +75,7 @@
           </form>
         @else
           <a href="{{ route('login') }}" class="px-3 py-2 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-500/10 transition">Login</a>
-        @endauth -->
+        @endauth
             </div>
         </div>
     </nav>
@@ -151,114 +151,6 @@
             </article>
         </div>
     </section>
-
-    {{-- LOCATIONS (pakai field: name, region, country, lat, lng) --}}
-    <section class="max-w-7xl mx-auto px-4 lg:px-6 py-12" id="locations">
-        <div class="flex items-end justify-between gap-4">
-            <div>
-                <h2 class="text-2xl md:text-3xl font-semibold">Lokasi Operasional</h2>
-                <p class="mt-2 text-slate-700">Site tambang batubara & nikel AAP Mining.</p>
-            </div>
-        </div>
-
-        <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            @forelse($locations as $loc)
-            @php
-            $hasCoord = !is_null($loc->lat) && !is_null($loc->lng);
-            $map = $hasCoord ? "https://www.google.com/maps?q={$loc->lat},{$loc->lng}" : null;
-            @endphp
-
-            <article class="group relative bg-white border rounded-2xl p-5 shadow-sm hover:shadow-md transition">
-                <div class="flex items-start justify-between gap-3">
-                    <div>
-                        <h3 class="text-lg font-semibold flex items-center gap-2">
-                            <svg class="h-5 w-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                    d="M12 21s-6-4.35-6-10a6 6 0 1112 0c0 5.65-6 10-6 10z" />
-                                <circle cx="12" cy="11" r="2.5" stroke-width="1.8" />
-                            </svg>
-                            {{ $loc->name }}
-                        </h3>
-                        @if(!empty($loc->region))
-                        <p class="text-sm text-slate-600">{{ $loc->region }}</p>
-                        @endif
-                    </div>
-
-                    <span class="inline-flex items-center text-xs font-medium px-2 py-1 rounded-full border bg-slate-50 text-slate-700 border-slate-200">
-                        {{ $loc->country ?? 'ID' }}
-                    </span>
-                </div>
-
-                <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
-                    <div class="bg-slate-50 border rounded-lg p-3">
-                        <div class="text-[10px] uppercase tracking-wide text-slate-500">Latitude</div>
-                        <div class="font-semibold">{{ $hasCoord ? number_format($loc->lat, 6) : '—' }}</div>
-                    </div>
-                    <div class="bg-slate-50 border rounded-lg p-3">
-                        <div class="text-[10px] uppercase tracking-wide text-slate-500">Longitude</div>
-                        <div class="font-semibold">{{ $hasCoord ? number_format($loc->lng, 6) : '—' }}</div>
-                    </div>
-                </div>
-
-                <div class="mt-4">
-                    @if($map)
-                    <a href="{{ $map }}" target="_blank" rel="noopener"
-                        class="inline-flex items-center gap-1 text-sm font-medium text-emerald-700 hover:underline">
-                        Buka di Google Maps
-                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                d="M7 17l10-10M14 7h3V4" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                d="M5 7v10a2 2 0 002 2h10" />
-                        </svg>
-                    </a>
-                    @else
-                    <span class="text-xs text-slate-500">Koordinat belum tersedia</span>
-                    @endif
-                </div>
-            </article>
-            @empty
-            <div class="col-span-full">
-                <div class="p-6 border rounded-xl bg-slate-50 text-slate-600">
-                    Belum ada data lokasi. Tambahkan data di Admin terlebih dahulu.
-                </div>
-            </div>
-            @endforelse
-        </div>
-    </section>
-{{-- CATEGORIES --}}
-<section class="max-w-7xl mx-auto px-4 lg:px-6 py-12" id="categories">
-  <div class="flex items-end justify-between gap-4">
-    <div>
-      <h2 class="text-2xl md:text-3xl font-semibold">Kategori Lowongan</h2>
-      <p class="mt-2 text-slate-700">Jelajahi posisi berdasarkan kategori fungsi.</p>
-    </div>
-  </div>
-
-  <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-    @forelse($categories as $cat)
-      <a href="{{ route('jobs.index', ['category' => $cat->slug]) }}"
-         class="group bg-white border rounded-xl p-5 shadow-sm hover:shadow-md hover:border-emerald-300 transition block">
-        <div class="flex items-center justify-between">
-          <h3 class="font-semibold">{{ $cat->name }}</h3>
-          <span class="text-xs px-2 py-1 rounded-full border bg-emerald-50 text-emerald-700 border-emerald-200">
-  ID: {{ $cat->id }}
-</span>
-        </div>
-        <div class="mt-3 inline-flex items-center gap-1 text-emerald-700 text-sm font-medium">
-          Lihat posisi
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </div>
-      </a>
-    @empty
-      <div class="col-span-full p-6 border rounded-xl bg-slate-50 text-slate-600">
-        Belum ada kategori.
-      </div>
-    @endforelse
-  </div>
-</section>
 
 
     <!-- BENEFITS -->
