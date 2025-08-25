@@ -32,7 +32,7 @@
                 <a href="#benefits" class="px-3 py-2 rounded-lg hover:bg-emerald-500/10 hover:text-emerald-700 transition">Benefit</a>
                 <a href="#process" class="px-3 py-2 rounded-lg hover:bg-emerald-500/10 hover:text-emerald-700 transition">Proses</a>
 
-                <!-- @auth
+                @auth
           @if(auth()->user()->is_admin)
             <a href="{{ route('admin.dashboard') }}" class="px-3 py-2 rounded-lg hover:bg-emerald-500/10 hover:text-emerald-700 transition">Admin</a>
           @endif
@@ -46,8 +46,7 @@
             <button type="submit" class="px-3 py-2 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-500/10 transition">Logout</button>
           </form>
         @else
-          <a href="{{ route('login') }}" class="px-3 py-2 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-500/10 transition">Login</a>
-        @endauth  -->
+        @endauth
             </div>
 
             <button id="nav-toggle" class="md:hidden h-10 w-10 grid place-items-center rounded-lg border border-slate-200 hover:bg-emerald-500/10 transition" aria-label="Buka menu">
