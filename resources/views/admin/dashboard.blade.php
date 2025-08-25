@@ -6,7 +6,7 @@
   <title>Admin Dashboard</title>
 
   {{-- Tailwind + Vite --}}
-  @vite(['resources/css/app.css','resources/js/app.js','resources/js/admin/dashboard.js'])
+  @vite(['resources/css/app.css','resources/js/app.js'])
 
   {{-- CDN Chart.js & Leaflet (global) --}}
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
